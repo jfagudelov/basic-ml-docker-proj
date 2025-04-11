@@ -1,0 +1,19 @@
+
+# Project configuration
+project:
+  name: "ml-container_project"
+  version: "0.1.0"
+  description: "Basic ML model to train containerization"
+  author: "Juan Felipe Agudelo Vélez"
+
+# Data paths
+paths:
+  data:
+    absulute_path: 
+    raw: "./data/raw/"
+    features: "./data/features/"
+  models: "./models/trained/"
+  logs: "./logs/"
+
+data:
+  file_name: "iris.parquet"
