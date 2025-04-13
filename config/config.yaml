@@ -9,11 +9,37 @@ project:
 # Data paths
 paths:
   data:
-    absulute_path: 
     raw: "./data/raw/"
     features: "./data/features/"
-  models: "./models/trained/"
+  model: 
+    model_file: "./models/trained/"
+    hyperparams: "./models/hyperparameters/"
   logs: "./logs/"
 
-data:
-  file_name: "iris.parquet"
+# File names
+names:
+  data:
+    raw: "iris.parquet"
+    features: "processed_iris.parquet"
+  model:
+    model: "knn_best_model.z"
+    hyperparams: "best_params.json"
+    best_hyperparams: "best_params.json"
+    grid_cv_results: "results_table.csv"
+
+# Target columns
+data: ["target"]
+
+# Modelling
+model:
+  trainParams:
+    cv_prctg: 0.9
+    param_grid:
+      {
+        n_neighbors: [2, 3, 4],
+        weights: ['uniform', 'distance'],
+        metric: ['minkowski', 'euclidean']
+      }
+    n_folds: 4
+    eval_metrics: 'f1_weighted'
+    refit: True
