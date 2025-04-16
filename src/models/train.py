@@ -1,6 +1,7 @@
 
 
 import pandas as pd
+import numpy as np
 import json
 import os
 
@@ -8,8 +9,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.metrics import f1_score
 
-from joblib import dump
 from src.data.data_loader import load_data
+from typing import Union
+from joblib import dump
 
 
 def processed_data_loading(file_path: str) -> pd.DataFrame:
@@ -22,19 +24,23 @@ def processed_data_loading(file_path: str) -> pd.DataFrame:
     """
     return pd.read_parquet(file_path)
 
-def perfom_grid_search(X, y, config) -> None:
+def perfom_grid_search(
+        X: Union[pd.DataFrame, np.ndarray],
+        y: Union[pd.DataFrame, np.ndarray],
+        config: dict
+    ) -> None:
     """
     Performs CV grid search over the data to find best model parameters.
     Args:
-        X (pd.DataFrame): Design matrix.
-        y (pd.DataFrame): Target variable.
+        X Union[pd.DataFrame, np.ndarray]: Design matrix.
+        y Union[pd.DataFrame, np.ndarray]: Target variable.
         config (dict): Training configuration JSON
     Returns:
         None
     """
     
     # Load data
-    X_cv, _, y_cv, _ = train_test_split(
+    X_cv, X_test, y_cv, y_test = train_test_split(
         X, y,
         train_size = config['model']['cv_prtcg'],
         test_size = 1 - config['model']['cv_prtcg'],
@@ -66,7 +72,7 @@ def perfom_grid_search(X, y, config) -> None:
     with open(os.path.join(hyperparams_path, hyperparams_name), 'a') as f:
         json.dump(best_params, f)
         
-    # Save CV result resume
+    # Save CV result resume.
     results_table_name = config["names"]["grid_cv_results"]
     pd.DataFrame(grid_search.cv_results_).to_csv(
         os.path.join(hyperparams_path, results_table_name),
@@ -74,9 +80,18 @@ def perfom_grid_search(X, y, config) -> None:
         index = False
     )
     
-    return X_cv, y_cv
+    # Saving results on test dataset.
+    pd.DataFrame({
+                    'Score': ['F1'],
+                    'Value': [f1_score(grid_search.best_estimator_.predict(X_test), y_test)]
+                 }).to_csv(
+                     os.path.join(hyperparams_path, 'cv_test_scores.csv'),
+                     sep = ';',
+                     index = False
+                 )
+    
 
-def train(config, grid_search = False) -> None:
+def train(config: dict, grid_search: bool = False) -> None:
     """
     Train KNN Classifier on data.
     Args:
@@ -89,7 +104,7 @@ def train(config, grid_search = False) -> None:
 
     # Perfom CV
     if grid_search:
-        X_cv_test, y_cv_test = perfom_grid_search(X, y)
+        perfom_grid_search(X, y)
     
     # Load params
     hyperparams_path = config['paths']['model']['hyperparams']
@@ -104,8 +119,8 @@ def train(config, grid_search = False) -> None:
     
     X_train, _, y_train, _ = train_test_split(
         X, y,
-        train_size = 0.9,
-        test_size = 0.1,
+        train_size = config['model']['cv_prtcg'],
+        test_size = 1 - config['model']['cv_prtcg'],
         shuffle = True,
         stratify = y
     )
@@ -116,9 +131,5 @@ def train(config, grid_search = False) -> None:
     model_path = config['path']['model']['model_file']
     model_name = config['path']['names']['model']
     model_path = os.path.join(model_path, model_name)
-    
-    # Measuring
-    if grid_search:
-        f1_score()
     
     dump(model_path)
