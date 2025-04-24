@@ -11,6 +11,7 @@ paths:
   data:
     raw: "./data/raw/"
     features: "./data/features/"
+    predictions: "./data/predictions/"
   model: 
     model_file: "./models/trained/"
     hyperparams: "./models/hyperparameters/"
@@ -23,6 +24,7 @@ names:
     features: "processed_iris.parquet"
   model:
     model: "knn_best_model.z"
+    best_model: "knn_best_model.z"
     hyperparams: "best_params.json"
     best_hyperparams: "best_params.json"
     grid_cv_results: "results_table.csv"

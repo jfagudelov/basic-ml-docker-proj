@@ -42,8 +42,8 @@ def perfom_grid_search(
     # Load data
     X_cv, X_test, y_cv, y_test = train_test_split(
         X, y,
-        train_size = config['model']['cv_prtcg'],
-        test_size = 1 - config['model']['cv_prtcg'],
+        train_size = config['model']['trainParams']['cv_prtcg'],
+        test_size = 1 - config['model']['trainParams']['cv_prtcg'],
         shuffle = True,
         stratify = y,
         random_state = 42
@@ -119,8 +119,8 @@ def train(config: dict, grid_search: bool = False) -> None:
     
     X_train, _, y_train, _ = train_test_split(
         X, y,
-        train_size = config['model']['cv_prtcg'],
-        test_size = 1 - config['model']['cv_prtcg'],
+        train_size = config['model']['trainParams']['cv_prtcg'],
+        test_size = 1 - config['model']['trainParams']['cv_prtcg'],
         shuffle = True,
         stratify = y
     )
@@ -132,4 +132,4 @@ def train(config: dict, grid_search: bool = False) -> None:
     model_name = config['path']['names']['model']
     model_path = os.path.join(model_path, model_name)
     
-    dump(model_path)
+    dump(model, model_path)
