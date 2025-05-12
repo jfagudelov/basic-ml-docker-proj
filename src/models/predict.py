@@ -6,6 +6,7 @@ import os
 
 from joblib import load
 from typing import Union
+from datetime import datetime
 
 def predict(
         X: Union[pd.DataFrame, np.ndarray], 
@@ -39,5 +40,21 @@ def save_prediction(pred: np.ndarray, config: dict) -> None:
     Returns:
         None
     """
-    pass
+    # Create a timestamp for the prediction file
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    # Create DataFrame with predictions
+    pred_df = pd.DataFrame(pred, columns=['prediction'])
+    
+    # Save predictions to the path specified in config
+    pred_path = config['paths']['data']['predictions']
+    pred_file = f"predictions_{timestamp}.csv"
+    
+    # Ensure the directory exists
+    os.makedirs(pred_path, exist_ok=True)
+    
+    # Save to CSV
+    pred_df.to_csv(os.path.join(pred_path, pred_file), index=False)
+    
+    print(f"Predictions saved to {os.path.join(pred_path, pred_file)}")
     

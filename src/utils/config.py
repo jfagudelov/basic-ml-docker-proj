@@ -8,7 +8,7 @@ def load_config(config_path = "config/config.yaml") -> str:
     Args:
         config_path (str): Relative path to config file.
     Return:
-        str
+        dict
     """
     with open(config_path, 'r') as file:
         config = yaml.safe_load(file)

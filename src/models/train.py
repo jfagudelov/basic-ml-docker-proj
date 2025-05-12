@@ -42,8 +42,8 @@ def perfom_grid_search(
     # Load data
     X_cv, X_test, y_cv, y_test = train_test_split(
         X, y,
-        train_size = config['model']['trainParams']['cv_prtcg'],
-        test_size = 1 - config['model']['trainParams']['cv_prtcg'],
+        train_size = config['model']['trainParams']['cv_prctg'],
+        test_size = 1 - config['model']['trainParams']['cv_prctg'],
         shuffle = True,
         stratify = y,
         random_state = 42
@@ -69,11 +69,11 @@ def perfom_grid_search(
     # Update best params.
     hyperparams_path = config['paths']['model']['hyperparams']
     hyperparams_name = config['names']['model']['best_hyperparams']
-    with open(os.path.join(hyperparams_path, hyperparams_name), 'a') as f:
+    with open(os.path.join(hyperparams_path, hyperparams_name), 'w') as f:
         json.dump(best_params, f)
         
     # Save CV result resume.
-    results_table_name = config["names"]["grid_cv_results"]
+    results_table_name = config["names"]['model']["grid_cv_results"]
     pd.DataFrame(grid_search.cv_results_).to_csv(
         os.path.join(hyperparams_path, results_table_name),
         sep = ';',
@@ -104,13 +104,14 @@ def train(config: dict, grid_search: bool = False) -> None:
 
     # Perfom CV
     if grid_search:
-        perfom_grid_search(X, y)
+        perfom_grid_search(X, y, config)
     
     # Load params
     hyperparams_path = config['paths']['model']['hyperparams']
     hyperparams_name = config['names']['model']['hyperparams']    
     
-    params = json.load(os.path.join(hyperparams_path, hyperparams_name))
+    with open(os.join(hyperparams_path, hyperparams_name), 'r') as f:
+        params = json.load(f)
     
     # Model
     model = KNeighborsClassifier(
@@ -119,8 +120,8 @@ def train(config: dict, grid_search: bool = False) -> None:
     
     X_train, _, y_train, _ = train_test_split(
         X, y,
-        train_size = config['model']['trainParams']['cv_prtcg'],
-        test_size = 1 - config['model']['trainParams']['cv_prtcg'],
+        train_size = config['model']['trainParams']['cv_prctg'],
+        test_size = 1 - config['model']['trainParams']['cv_prctg'],
         shuffle = True,
         stratify = y
     )
@@ -128,8 +129,8 @@ def train(config: dict, grid_search: bool = False) -> None:
     model.fit(X_train, y_train)
     
     # Save model
-    model_path = config['path']['model']['model_file']
-    model_name = config['path']['names']['model']
+    model_path = config['paths']['model']['model_file']
+    model_name = config['names']['model']['model']
     model_path = os.path.join(model_path, model_name)
     
     dump(model, model_path)
