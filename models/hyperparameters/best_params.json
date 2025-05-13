@@ -1,5 +1,1 @@
-{
-    "metric": "minkowski",
-    "n_neighbors": 3,
-    "weights": "uniform"
-}
+{"metric": "minkowski", "n_neighbors": 4, "weights": "distance"}

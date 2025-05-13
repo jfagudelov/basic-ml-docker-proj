@@ -18,7 +18,7 @@ RUN mkdir -p ./data/raw ./data/features ./data/predictions ./models/trained ./mo
 ENV PYTHONPATH=/app
 
 # Command to run when the container starts
-ENTRYPOINT [ " python ", " main.py "]
+ENTRYPOINT [ "python", "main.py"]
 
 # Default arguments
-CMD ["--preprocess", "--train", "--predict"]
+CMD ["--download", "--preprocess", "--train", "--predict"]

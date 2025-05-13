@@ -3,7 +3,7 @@
 import pandas as pd
 import os
 
-def load_data(config, tier):
+def load_data(config, tier, alt_data: str = None):
     """
     Loads training or raw data.
     Args:
@@ -16,7 +16,7 @@ def load_data(config, tier):
     # Paths to data
     data_path = config["paths"]["data"][tier]
     data_name = config["names"]["data"][tier]
-    path = os.path.join(data_path, data_name)
+    path = os.path.join(data_path, data_name) if alt_data is None else alt_data
     
     # Reading data
     data = pd.read_parquet(path)

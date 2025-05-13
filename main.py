@@ -4,6 +4,7 @@ import os
 import argparse
 from src.utils.config import load_config
 from src.utils.logging import setup_login
+from src.data.download_data import download_iris
 from src.data.preprocessing import preprocess_data
 from src.models.train import train
 from src.models.predict import predict, save_prediction
@@ -14,9 +15,11 @@ def main():
     parser = argparse.ArgumentParser(description = "ML Pipeline Orchestration")
     
     # Add arguments to setup mode of execution: preprocessing, training and predicting
+    parser.add_argument('--download', action = 'store_true', help = 'Retrieve data')
     parser.add_argument('--preprocess', action = 'store_true', help = 'Run data preprocessing')
     parser.add_argument('--train', action = 'store_true', help = "Train the model")
     parser.add_argument('--grid_search', action = 'store_true', help = 'Perform grid search during training')
+    parser.add_argument('--Xpath', type = str, default = None, help = 'Path to new X data')
     parser.add_argument('--predict', action = 'store_true', help = 'Make predictions')
     
     # Retrieve params
@@ -37,11 +40,17 @@ def main():
     os.makedirs(config['paths']['model']['hyperparams'], exist_ok = True)
     os.makedirs(config['paths']['logs'], exist_ok = True) # Exists true avoids raising error if path exists.
     
+    # Run data retrieving if requested.
+    if args.download:
+        logger.info("Starting data retrieving")
+        download_iris(config = config)
+        logger.info("Download finished!")
+    
     # Run preprocessing if requested.
     if args.preprocess:
         logger.info("Starting data preprocessing")
-        input_file = os.path.join(config['paths']['data']['raw'], config['paths']['names']['raw'])
-        output_file = os.path.join(config['paths']['data']['features'], config['paths']['names']['features'])
+        input_file = os.path.join(config['paths']['data']['raw'], config['names']['data']['raw'])
+        output_file = os.path.join(config['paths']['data']['features'], config['names']['data']['features'])
         
         # Preprocess with 2 components
         preprocess_data(input_file, output_file, n_components = 2)
@@ -57,7 +66,12 @@ def main():
     # Run prediction if needed.
     if args.predict:
         logger.info("Starting prediction")
-        X_test, _ = load_data(config, "features")
+        alt_data = args.Xpath
+        
+        if alt_data is not None:
+            logger.warning(f"Using data from {alt_data}!")
+        
+        X_test, _ = load_data(config, "features", alt_data = alt_data)
         predictions = predict(X_test, config)
         save_prediction(predictions, config)
         logger.info("Prediction completed")

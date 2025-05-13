@@ -82,8 +82,8 @@ def perfom_grid_search(
     
     # Saving results on test dataset.
     pd.DataFrame({
-                    'Score': ['F1'],
-                    'Value': [f1_score(grid_search.best_estimator_.predict(X_test), y_test)]
+                    'Score': ['f1'],
+                    'Value': [f1_score(grid_search.best_estimator_.predict(X_test), y_test, average = 'weighted')]
                  }).to_csv(
                      os.path.join(hyperparams_path, 'cv_test_scores.csv'),
                      sep = ';',
@@ -110,7 +110,7 @@ def train(config: dict, grid_search: bool = False) -> None:
     hyperparams_path = config['paths']['model']['hyperparams']
     hyperparams_name = config['names']['model']['hyperparams']    
     
-    with open(os.join(hyperparams_path, hyperparams_name), 'r') as f:
+    with open(os.path.join(hyperparams_path, hyperparams_name), 'r') as f:
         params = json.load(f)
     
     # Model

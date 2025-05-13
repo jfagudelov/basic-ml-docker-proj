@@ -1,0 +1,48 @@
+2025-05-12 20:15:24,924 - src.utils.logging - INFO - Starting ML pipeline
+2025-05-12 20:15:24,928 - src.utils.logging - INFO - Starting data retrieving
+2025-05-12 20:23:28,345 - src.utils.logging - INFO - Starting ML pipeline
+2025-05-12 20:23:28,348 - src.utils.logging - INFO - Starting data retrieving
+2025-05-12 20:23:28,432 - src.utils.logging - INFO - Download finished!
+2025-05-12 20:23:28,433 - src.utils.logging - INFO - ML pipeline completed.
+2025-05-12 20:24:12,570 - src.utils.logging - INFO - Starting ML pipeline
+2025-05-12 20:24:12,575 - src.utils.logging - INFO - Starting data retrieving
+2025-05-12 20:24:12,599 - src.utils.logging - INFO - Download finished!
+2025-05-12 20:24:12,599 - src.utils.logging - INFO - Starting data preprocessing
+2025-05-12 20:25:04,208 - src.utils.logging - INFO - Starting ML pipeline
+2025-05-12 20:25:04,212 - src.utils.logging - INFO - Starting data retrieving
+2025-05-12 20:25:04,227 - src.utils.logging - INFO - Download finished!
+2025-05-12 20:25:04,227 - src.utils.logging - INFO - Starting data preprocessing
+2025-05-12 20:25:04,340 - src.utils.logging - INFO - Data preprocessing completed.
+2025-05-12 20:25:04,340 - src.utils.logging - INFO - ML pipeline completed.
+2025-05-12 20:25:15,647 - src.utils.logging - INFO - Starting ML pipeline
+2025-05-12 20:25:15,651 - src.utils.logging - INFO - Starting data retrieving
+2025-05-12 20:25:15,666 - src.utils.logging - INFO - Download finished!
+2025-05-12 20:25:15,666 - src.utils.logging - INFO - Starting data preprocessing
+2025-05-12 20:25:15,691 - src.utils.logging - INFO - Data preprocessing completed.
+2025-05-12 20:25:15,691 - src.utils.logging - INFO - Starting model training with CV Grid Search.
+2025-05-12 20:25:15,730 - src.utils.logging - INFO - Training completed.
+2025-05-12 20:25:15,730 - src.utils.logging - INFO - ML pipeline completed.
+2025-05-12 20:25:32,620 - src.utils.logging - INFO - Starting ML pipeline
+2025-05-12 20:25:32,623 - src.utils.logging - INFO - Starting data retrieving
+2025-05-12 20:25:32,641 - src.utils.logging - INFO - Download finished!
+2025-05-12 20:25:32,641 - src.utils.logging - INFO - Starting data preprocessing
+2025-05-12 20:25:32,669 - src.utils.logging - INFO - Data preprocessing completed.
+2025-05-12 20:25:32,669 - src.utils.logging - INFO - Starting model training.
+2025-05-12 20:37:05,014 - src.utils.logging - INFO - Starting ML pipeline
+2025-05-12 20:37:05,020 - src.utils.logging - INFO - Starting data retrieving
+2025-05-12 20:37:05,137 - src.utils.logging - INFO - Download finished!
+2025-05-12 20:37:05,137 - src.utils.logging - INFO - Starting data preprocessing
+2025-05-12 20:37:05,290 - src.utils.logging - INFO - Data preprocessing completed.
+2025-05-12 20:37:05,290 - src.utils.logging - INFO - Starting model training.
+2025-05-12 20:37:05,964 - src.utils.logging - INFO - Training completed.
+2025-05-12 20:37:05,964 - src.utils.logging - INFO - ML pipeline completed.
+2025-05-12 20:38:20,266 - src.utils.logging - INFO - Starting ML pipeline
+2025-05-12 20:38:20,271 - src.utils.logging - INFO - Starting data retrieving
+2025-05-12 20:38:20,391 - src.utils.logging - INFO - Download finished!
+2025-05-12 20:38:20,392 - src.utils.logging - INFO - Starting data preprocessing
+2025-05-12 20:38:20,540 - src.utils.logging - INFO - Data preprocessing completed.
+2025-05-12 20:38:20,541 - src.utils.logging - INFO - Starting model training.
+2025-05-12 20:38:21,235 - src.utils.logging - INFO - Training completed.
+2025-05-12 20:38:21,235 - src.utils.logging - INFO - Starting prediction
+2025-05-12 20:38:21,254 - src.utils.logging - INFO - Prediction completed
+2025-05-12 20:38:21,254 - src.utils.logging - INFO - ML pipeline completed.
